@@ -1,4 +1,4 @@
-package br.com.alura.bytebank;
+package br.com.alura.bytebank.domain.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
