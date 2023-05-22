@@ -44,11 +44,10 @@ public class Conta {
 
     @Override
     public String toString() {
-        return "Conta{" +
-                "numero='" + numero + '\'' +
-                ", saldo=" + saldo +
-                ", titular=" + titular +
-                '}';
+        return "Conta [" +
+                "número: " + numero +
+                ", saldo: R$" + saldo +
+                "] | " + titular;
     }
 
     public Integer getNumero() {

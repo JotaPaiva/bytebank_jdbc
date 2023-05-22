@@ -5,6 +5,7 @@ import br.com.alura.bytebank.domain.application.RegraDeNegocioException;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,8 +21,11 @@ public class ContaService {
 
     private Set<Conta> contas = new HashSet<>();
 
-    public Set<Conta> listarContasAbertas() {
-        return contas;
+    public Set<Conta> listarContasAbertas() throws SQLException {
+
+        Connection con = connection.recuperaConexao();
+        return new ContaDAO(con).listar();
+
     }
 
     public BigDecimal consultarSaldo(Integer numeroDaConta) {
@@ -29,7 +33,7 @@ public class ContaService {
         return conta.getSaldo();
     }
 
-    public void abrir(DadosAberturaConta dadosDaConta) {
+    public void abrir(DadosAberturaConta dadosDaConta) throws SQLException {
 
         Connection con = connection.recuperaConexao();
         new ContaDAO(con).salvar(dadosDaConta);

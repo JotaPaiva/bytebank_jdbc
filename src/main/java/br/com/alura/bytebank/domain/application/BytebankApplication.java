@@ -4,6 +4,7 @@ import br.com.alura.bytebank.domain.cliente.DadosCadastroCliente;
 import br.com.alura.bytebank.domain.conta.ContaService;
 import br.com.alura.bytebank.domain.conta.DadosAberturaConta;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class BytebankApplication {
@@ -54,9 +55,10 @@ public class BytebankApplication {
                         realizarDeposito();
                         break;
                     default:
+                        System.out.println("\nObrigado por usar o Bytebank, até logo!");
                         break;
                 }
-            } catch (RegraDeNegocioException e) {
+            } catch (RegraDeNegocioException | SQLException e) {
                 System.out.println("Erro: " +e.getMessage());
                 System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu");
                 teclado.next();
@@ -66,15 +68,15 @@ public class BytebankApplication {
 
     }
 
-    private static void listarContas() {
+    private static void listarContas() throws SQLException {
 
-        System.out.println("Contas cadastradas:");
+        System.out.println("\nExibindo contas cadastradas: \n");
         var contas = service.listarContasAbertas();
         contas.stream().forEach(System.out::println);
 
     }
 
-    private static void abrirConta() {
+    private static void abrirConta() throws SQLException {
 
         System.out.print("\nDigite o número da conta: ");
         var numeroDaConta = teclado.nextInt();

@@ -30,11 +30,11 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" +
-                "nome='" + nome + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return "Titular [" +
+                "nome: " + nome +
+                ", CPF: " + cpf +
+                ", e-mail: " + email +
+                ']';
     }
 
     public String getNome() {
