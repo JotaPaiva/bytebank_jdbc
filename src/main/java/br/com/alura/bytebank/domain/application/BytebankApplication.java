@@ -16,7 +16,7 @@ public class BytebankApplication {
 
         int opcao = 0;
 
-        while (opcao != 7) {
+        while (opcao != 8) {
 
             System.out.print(
                     "\n===============================\n" +
@@ -28,7 +28,8 @@ public class BytebankApplication {
                             "4 - Consultar saldo de uma conta\n" +
                             "5 - Realizar saque em uma conta\n" +
                             "6 - Realizar depósito em uma conta\n" +
-                            "7 - Sair\n" +
+                            "7 - Realizar transferência para uma conta\n" +
+                            "8 - Sair\n" +
                             "\nEscolha a opção desejada: "
             );
 
@@ -54,13 +55,16 @@ public class BytebankApplication {
                     case 6:
                         realizarDeposito();
                         break;
+                    case 7:
+                        realizarTransferencia();
                     default:
                         System.out.println("\nObrigado por usar o Bytebank, até logo!");
                         break;
                 }
+
             } catch (RegraDeNegocioException | SQLException e) {
-                System.out.println("Erro: " +e.getMessage());
-                System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu");
+                System.out.println("\nErro: " +e.getMessage());
+                System.out.print("\nInsira qualquer valor para voltar ao menu: ");
                 teclado.next();
             }
 
@@ -74,9 +78,12 @@ public class BytebankApplication {
         var contas = service.listarContasAbertas();
         contas.stream().forEach(System.out::println);
 
+        System.out.print("\nInsira qualquer valor para voltar ao menu: ");
+        teclado.next();
+
     }
 
-    private static void abrirConta() throws SQLException {
+    private static void abrirConta() {
 
         System.out.print("\nDigite o número da conta: ");
         var numeroDaConta = teclado.nextInt();
@@ -94,52 +101,89 @@ public class BytebankApplication {
 
         System.out.println("\nConta aberta com sucesso!");
 
+        System.out.print("\nInsira qualquer valor para voltar ao menu: ");
+        teclado.next();
+
     }
 
     private static void encerrarConta() {
 
-        System.out.print("Digite o número da conta: ");
+        System.out.print("\nDigite o número da conta: ");
         var numeroDaConta = teclado.nextInt();
 
         service.encerrar(numeroDaConta);
 
-        System.out.println("Conta encerrada com sucesso!");
+        System.out.println("\nConta encerrada com sucesso!");
+
+        System.out.print("\nInsira qualquer valor para voltar ao menu: ");
+        teclado.next();
 
     }
 
     private static void consultarSaldo() {
 
-        System.out.println("Digite o número da conta:");
+        System.out.print("\nDigite o número da conta: ");
         var numeroDaConta = teclado.nextInt();
+
         var saldo = service.consultarSaldo(numeroDaConta);
-        System.out.println("Saldo da conta: " +saldo);
+
+        System.out.print("\nSaldo da conta: R$" + saldo);
+
+        System.out.print("\nInsira qualquer valor para voltar ao menu: ");
+        teclado.next();
 
     }
 
     private static void realizarSaque() {
 
-        System.out.println("Digite o número da conta:");
+        System.out.print("\nDigite o número da conta: ");
         var numeroDaConta = teclado.nextInt();
 
-        System.out.println("Digite o valor do saque:");
+        System.out.print("Digite o valor do saque: R$");
         var valor = teclado.nextBigDecimal();
 
         service.realizarSaque(numeroDaConta, valor);
-        System.out.println("Saque realizado com sucesso!");
+        System.out.println("\nSaque realizado com sucesso!");
+
+        System.out.print("\nInsira qualquer valor para voltar ao menu: ");
+        teclado.next();
 
     }
 
     private static void realizarDeposito() {
 
-        System.out.println("Digite o número da conta:");
+        System.out.print("\nDigite o número da conta: ");
         var numeroDaConta = teclado.nextInt();
 
-        System.out.println("Digite o valor do depósito:");
+        System.out.print("Digite o valor do depósito: R$");
         var valor = teclado.nextBigDecimal();
 
         service.realizarDeposito(numeroDaConta, valor);
 
-        System.out.println("Depósito realizado com sucesso!");
+        System.out.println("\nDepósito realizado com sucesso!");
+
+        System.out.print("\nInsira qualquer valor para voltar ao menu: ");
+        teclado.next();
+
+    }
+
+    private static void realizarTransferencia() {
+
+        System.out.print("\nDigite o número da conta de origem: ");
+        var numeroDaContaOrigem = teclado.nextInt();
+
+        System.out.print("Digite o número da conta de destino: ");
+        var numeroDaContaDestino = teclado.nextInt();
+
+        System.out.print("Digite o valor da transferência: R$");
+        var valor = teclado.nextBigDecimal();
+
+        service.realizarTransferencia(numeroDaContaOrigem,numeroDaContaDestino,valor);
+
+        System.out.println("\nTransferência realizada com sucesso!");
+
+        System.out.print("\nInsira qualquer valor para voltar ao menu: ");
+        teclado.next();
 
     }
 
