@@ -111,9 +111,15 @@ public class BytebankApplication {
         System.out.print("\nDigite o número da conta: ");
         var numeroDaConta = teclado.nextInt();
 
-        service.encerrar(numeroDaConta);
+        System.out.print("Insira [1] para confirmar o encerramento da conta: ");
+        var confirmacao = teclado.nextInt();
 
-        System.out.println("\nConta encerrada com sucesso!");
+        if (confirmacao == 1) {
+            service.encerrar(numeroDaConta);
+            System.out.println("\nConta encerrada com sucesso!");
+        } else {
+            System.out.println("\nAlternativa não identificada. O encerramento não foi realizado.");
+        }
 
         System.out.print("\nInsira qualquer valor para voltar ao menu: ");
         teclado.next();
